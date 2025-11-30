@@ -14,3 +14,4 @@ Developed a serverless web application using AWS Lambda, API Gateway, DynamoDB, 
 3. **API Gateway** -> triggers **AWS Lambda (Python)** -> performs business logic and CRUD on **DynamoDB**.  
 4. **CloudWatch** collects logs & metrics; **IAM** roles provide least-privilege access.
 
+<img width="1105" height="436" alt="SS" src="https://github.com/user-attachments/assets/330493a7-1cfb-4bde-ab7b-b5c395b647f8" />
