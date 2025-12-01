@@ -15,30 +15,56 @@ Developed a serverless web application using AWS Lambda, API Gateway, DynamoDB, 
 4. **CloudWatch** collects logs & metrics; **IAM** roles provide least-privilege access.
 5. <img width="2010" height="880" alt="serverless-lambda-dynamodb-min" src="https://github.com/user-attachments/assets/65d56edf-62bf-4659-8dd2-79120091865d" />
 
- PART - 1 
-1. We will be Creating DynamoDB table and Lambda functions 
-and we will creating two Lambda function 
-one for GET
-one for POST 
-And we will configure to DynamoDB table 
+Here is a **clean, professional, GitHub-ready README (Part-1)** based on your steps.
+You can copy–paste directly into your repository.
 
-STEP-1
-1.Open DynamoDB in AWS 
-2.Open table - Create table - Table name - Partition Key - Sort key - Create Table 
-3.Open Lambda in AWS 
-4.Create function
-  Function name - studentData  
-  Runtime - using python 3.12
-  Execution role - using as existing role 
-  Existing rule - lambdaDynamoDB-role
-  CREATE FUNCTION
-5.In Section Code 
-  we need BOTO3 configuring DynamoDB
-  Lambda function Code for getting data
-  import json
-  import boto3
+---
 
-  def lambda_handler(event, context):
+# **📌 Part 1: Creating DynamoDB Table & Lambda Functions (GET & POST)**
+
+In this part, we create a DynamoDB table and two AWS Lambda functions:
+
+* **GET Lambda** → Fetch all student records
+* **POST Lambda** → Insert a new student record
+
+---
+
+## **✅ Step 1: Create DynamoDB Table**
+
+1. Open **AWS Console** → Search **DynamoDB**
+2. Go to **Tables** → Click **Create table**
+3. Enter details:
+
+   * **Table Name:** `studentData`
+   * **Partition Key:** `studentid` (String)
+   * **Sort Key:** Optional (if needed)
+4. Click **Create Table**
+
+---
+
+## **✅ Step 2: Create Lambda Function for GET API**
+
+### **1. Open AWS Lambda**
+
+* Click **Create Function**
+
+### **2. Enter Details**
+
+* **Function Name:** `studentData`
+* **Runtime:** Python 3.12
+* **Execution Role:** Use existing role
+* **Existing Role:** `lambdaDynamoDB-role`
+* Click **Create Function**
+
+---
+
+## **🧾 Lambda GET Function Code**
+
+```python
+import json
+import boto3
+
+def lambda_handler(event, context):
     # Initialize a DynamoDB resource object for the specified region
     dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
 
@@ -49,43 +75,59 @@ STEP-1
     response = table.scan()
     data = response['Items']
 
-    # If there are more items to scan, continue scanning until all items are retrieved
+    # Continue scanning if more data exists
     while 'LastEvaluatedKey' in response:
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response['Items'])
 
-
-    # Return the retrieved data
     return data
-   We Need to Deploy
-   then TEST it 
-6. Configure test ivent 
-   Event name - mytest
-   SAVE IT 
-7. Create another function in Lambda 
-   Function name - insertStudentData 
-   Runtime - using python 3.12
-   Execution role - using as existing role
-   Existing rule - lambdaDynamoDB-role
-   CREATE FUNCTION
-5.In Section Code
-  Lambda function Code for inserting data 
-  import json
-  import boto3
+```
 
-  # Create a DynamoDB object using the AWS SDK
-  dynamodb = boto3.resource('dynamodb')
-  # Use the DynamoDB object to select our table
-  table = dynamodb.Table('studentData')
+### **3. Deploy the function**
 
-  # Define the handler function that the Lambda service will use as an entry point
-  def lambda_handler(event, context):
-    # Extract values from the event object we got from the Lambda service and store in variables
+Click **Deploy**
+
+### **4. Test the function**
+
+* Go to **Test**
+* **Event Name:** `mytest`
+* Save
+* Click **Test**
+
+---
+
+## **✅ Step 3: Create Lambda Function for POST API**
+
+### **1. Create New Lambda Function**
+
+* **Function Name:** `insertStudentData`
+* **Runtime:** Python 3.12
+* **Execution Role:** Use existing role
+* **Role:** `lambdaDynamoDB-role`
+* Click **Create Function**
+
+---
+
+## **🧾 Lambda POST Function Code**
+
+```python
+import json
+import boto3
+
+# Create a DynamoDB resource object
+dynamodb = boto3.resource('dynamodb')
+
+# Connect to our DynamoDB table
+table = dynamodb.Table('studentData')
+
+def lambda_handler(event, context):
+    # Extract values from event
     student_id = event['studentid']
     name = event['name']
     student_class = event['class']
     age = event['age']
     
-    # Write student data to the DynamoDB table and save the response in a variable
+    # Insert data into DynamoDB
     response = table.put_item(
         Item={
             'studentid': student_id,
@@ -95,29 +137,37 @@ STEP-1
         }
     )
     
-    # Return a properly formatted JSON object
     return {
         'statusCode': 200,
         'body': json.dumps('Student data saved successfully!')
     }
-   We Need to Deploy
-   then TEST it
-6. Configure test ivent 
-   Event name - mytest
-   Even JSON
-   {
-            'studentid': student_id,
-            'name': name,
-            'class': student_class,
-            'age': age
-        }
+```
+
+### **2. Deploy the function**
+
+Click **Deploy**
+
+---
+
+## **🧪 Test Event JSON (for POST)**
+
+Use the following JSON:
+
+```json
+{
+  "studentid": "101",
+  "name": "Rahul",
+  "class": "10",
+  "age": 15
+}
+```
+
+* **Event Name:** `mytest`
+* Save → Test
+
+---
+
+# ✅ **PART 1 COMPLETED**
 
  
-   SAVE IT
-
- 
-
-PART 1 IS COMPLETED 
-
-
 
