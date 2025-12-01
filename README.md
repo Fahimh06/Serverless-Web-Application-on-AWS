@@ -12,7 +12,8 @@ Developed a serverless web application using AWS Lambda, API Gateway, DynamoDB, 
 1. **Clients** (Browser / Mobile) -> request to  
 2. **Amazon CloudFront** -> routes to **S3** for static assets (frontend) or to  
 3. **API Gateway** -> triggers **AWS Lambda (Python)** -> performs business logic and CRUD on **DynamoDB**.  
-4. **CloudWatch** collects logs & metrics; **IAM** roles provide least-privil<img width="2010" height="880" alt="serverless-lambda-dynamodb-min" src="https://github.com/user-attachments/assets/65d56edf-62bf-4659-8dd2-79120091865d" />
+4. **CloudWatch** collects logs & metrics; **IAM** roles provide least-privilege access.
+5. <img width="2010" height="880" alt="serverless-lambda-dynamodb-min" src="https://github.com/user-attachments/assets/65d56edf-62bf-4659-8dd2-79120091865d" />
  
 
 
