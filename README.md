@@ -169,10 +169,9 @@ Use the following JSON:
 
 # ✅ **PART 1 COMPLETED**
 
-Below is a **clean, professional, GitHub-ready README (PART-2 + PART-3)**.
-You can paste this directly into your `README.md` file.
 
----
+
+
 
 # **📌 Part 2: Create API Gateway for Lambda + S3 Static Website Hosting**
 
